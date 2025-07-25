@@ -1,28 +1,24 @@
-// AlertsHistory.java
 package com.projet.cameraproject.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "alerts_history")
 @IdClass(AlertsHistoryId.class)
 public class AlertsHistory {
 
     @Id
-    @JoinColumn(name = "id_User")
+    @Column(name = "id_User")
     private int userId;
 
     @Id
-    @JoinColumn(name = "id_Camera")
+    @Column(name = "id_Camera")
     private int cameraId;
 
     @Id
-    @JoinColumn(name = "id_Alert")
+    @Column(name = "id_Alert")
     private int alertId;
 
     @ManyToOne
@@ -37,11 +33,22 @@ public class AlertsHistory {
     @JoinColumn(name = "id_Alert", insertable = false, updatable = false)
     private Alerts alert;
 
+    @Column(name = "start_alert", nullable = false)
     private LocalDateTime start_alert;
+    
+    @Column(name = "performed_at", nullable = true)
     private LocalDateTime performed_at;
 
-    // Getters and setters
+    // Constructors
+    public AlertsHistory() {}
 
+    public AlertsHistory(int userId, int cameraId, int alertId) {
+        this.userId = userId;
+        this.cameraId = cameraId;
+        this.alertId = alertId;
+    }
+
+    // Getters and setters
     public int getUserId() {
         return userId;
     }

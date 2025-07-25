@@ -40,8 +40,24 @@ public class CameraController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        cameraService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        try {
+            System.out.println("Attempting to delete camera with ID: " + id);
+
+            if (!cameraService.getById(id).isPresent()) {
+                System.out.println("Camera with ID " + id + " not found");
+                return ResponseEntity.notFound().build();
+            }
+
+            cameraService.delete(id);
+            System.out.println("Camera with ID " + id + " deleted successfully");
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            System.err.println("Error deleting camera with ID " + id + ": " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error deleting camera: " + e.getMessage());
+        }
     }
 
     @GetMapping("/status-counts")
@@ -59,5 +75,9 @@ public class CameraController {
         return ResponseEntity.ok(stats);
     }
 
+    @GetMapping("/status/offline-or-blurry")
+    public List<Camera> getOfflineOrBlurryCameras() {
+    return cameraService.findOfflineOrBlurryCameras();
+}
 
 }

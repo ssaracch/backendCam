@@ -47,6 +47,7 @@ public class AlertsService {
     }
 
     public Optional<Alerts> getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    return repository.findById(id);
+}
+
 }
