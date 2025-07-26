@@ -1,7 +1,9 @@
+// Updated AlertsHistory entity with new columns for AI integration
+
 package com.projet.cameraproject.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -39,6 +41,16 @@ public class AlertsHistory {
     @Column(name = "performed_at", nullable = true)
     private LocalDateTime performed_at;
 
+    // NEW COLUMNS for AI integration
+    @Column(name = "confidence", precision = 3, scale = 2)
+    private BigDecimal confidence;
+    
+    @Column(name = "source", length = 50)
+    private String source = "MANUAL";
+    
+    @Column(name = "captured_image", columnDefinition = "LONGTEXT")
+    private String capturedImage;
+
     // Constructors
     public AlertsHistory() {}
 
@@ -48,7 +60,7 @@ public class AlertsHistory {
         this.alertId = alertId;
     }
 
-    // Getters and setters
+    // Getters and setters for existing fields
     public int getUserId() {
         return userId;
     }
@@ -111,5 +123,44 @@ public class AlertsHistory {
 
     public void setPerformed_at(LocalDateTime performed_at) {
         this.performed_at = performed_at;
+    }
+
+    // Getters and setters for NEW fields
+    public BigDecimal getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(BigDecimal confidence) {
+        this.confidence = confidence;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getCapturedImage() {
+        return capturedImage;
+    }
+
+    public void setCapturedImage(String capturedImage) {
+        this.capturedImage = capturedImage;
+    }
+
+    @Override
+    public String toString() {
+        return "AlertsHistory{" +
+                "userId=" + userId +
+                ", cameraId=" + cameraId +
+                ", alertId=" + alertId +
+                ", start_alert=" + start_alert +
+                ", performed_at=" + performed_at +
+                ", confidence=" + confidence +
+                ", source='" + source + '\'' +
+                ", capturedImage='" + (capturedImage != null ? "present" : "null") + '\'' +
+                '}';
     }
 }

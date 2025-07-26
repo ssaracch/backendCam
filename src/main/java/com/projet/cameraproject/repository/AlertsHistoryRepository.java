@@ -28,4 +28,13 @@ public interface AlertsHistoryRepository extends JpaRepository<AlertsHistory, Al
     // Find resolved alerts only - FIXED: Use correct field name
     @Query("SELECT ah FROM AlertsHistory ah WHERE ah.performed_at IS NOT NULL")
     List<AlertsHistory> findByPerformed_atIsNotNull();
+
+    // Find ongoing alerts for a specific camera
+    @Query("SELECT ah FROM AlertsHistory ah WHERE ah.cameraId = :cameraId AND ah.performed_at IS NULL")
+    List<AlertsHistory> findByCameraIdAndPerformedAtIsNull(@Param("cameraId") int cameraId);
+
+    // Find all alerts for a camera ordered by start date
+    @Query("SELECT ah FROM AlertsHistory ah WHERE ah.cameraId = :cameraId ORDER BY ah.start_alert DESC")
+    List<AlertsHistory> findByCameraIdOrderByStartAlertDesc(@Param("cameraId") int cameraId);
+
 }

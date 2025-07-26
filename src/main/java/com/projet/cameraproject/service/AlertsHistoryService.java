@@ -12,6 +12,8 @@ import com.projet.cameraproject.repository.AlertsHistoryRepository;
 @Service
 public class AlertsHistoryService {
 
+
+    
     @Autowired
     private AlertsHistoryRepository repository;
 

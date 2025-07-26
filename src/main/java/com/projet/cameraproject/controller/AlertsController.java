@@ -56,4 +56,6 @@ public class AlertsController {
     public void delete(@PathVariable int id) {
         service.delete(id);
     }
+
+    
 }
